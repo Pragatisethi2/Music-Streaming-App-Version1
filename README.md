@@ -1,20 +1,5 @@
 
-# flask-ticket-show-app v1
 
-A platform for admin to add diffrent shows in venue and user can book ticket. 
-
-
-### Features : 
-
-- Admin can make shows and venue and alloacte them in many to many functionality with CRUD
-
-- User can book multiple tickets and manage them.
-
-- Dynamic Pricing.
-
-- search for shows, venue, tags.
-
-- filter with genere, loaction, rating.
 
 
 ### Technologies Used : 
