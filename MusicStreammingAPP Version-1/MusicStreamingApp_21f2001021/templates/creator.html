@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+      .right-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+     .center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      
+     }
+    </style>
+ </head>
+<body>
+    {% with messages= get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Home</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/user_dashboard">User Dashboard</a>
+          </li>
+          <li class="nav-item ">
+            <a href="{{url_for('profile')}}"class="nav-link ">
+              Profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/upload_song">Upload Song</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+        </div>
+      </div>
+    </nav>
+
+    
+      <div class="right-container">
+        <a href='/upload_song'><button type="button" class="btn btn-success" >Upload Song</button> <a href="{{url_for('album')}}"><button type="button" class="btn btn-dark" >Create Album</button></h2></a>
+      </div>
+    <br>
+        
+    <div class="card">
+      <div class="card-header">
+        <h2><strong>Your Dashboard</strong></h2>
+      </div>
+      <div class="container">
+      <div class="card-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card border-black" style="width: 200px; height: 200px; border-width: 2px;">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">Total Songs Uploaded</h5>
+                        <div class="center-container"><h2 class="card-text"><strong>{{total_songs}}</strong></h2></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card border-black" style="width: 200px; height: 200px; border-width: 2px;">
+                    <div class="card-body ">
+                        <h5 class="card-title font-weight-bold">Average Ratings</h5>
+                        <div class="center-container"><h2 class="card-text"><strong>{{ar}}</strong></h2></div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card border-black" style="width: 200px; height: 200px; border-width: 2px;">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">Total Albums </h5>
+                        <div class="center-container"><h2 class="card-text"><strong>{{total_albums}}</strong></h2></div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>    
+</div>
+    {% if songs %}
+   
+
+      <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+                <h2 class="card-header">Your Songs</h2>
+                <div class="container">
+                <table class="table table-hover table-striped">
+                 
+                  {% for val,song in songs.items() %}
+                 
+                    <tr>
+                      <td style="width: 200px;"><img src={{song.Song_pic}} alt="Image" class="img-fluid" style="width: 25px;height:25px;"> {{ song.Song_Title }}</td>
+                      <td style="width: 150px;"><a href="{{ url_for('song_details', Id=song.Id) }}"><button type="button" class="btn btn-dark">Read Lyrics</button></a></td>
+                      <td style="width: 100px;"><a href="{{ url_for('update_song', Id=song.Id) }}"><button type="button" class="btn btn-warning">Edit</button></a></td>
+                      <td style="width: 100px;"><button type="button" onclick="deleteSong('{{ song.Id }}')" class="btn btn-danger">Delete</button></td>
+                     
+                      </tr>
+                  {% endfor %}
+                  </table>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        {% if albums %}
+   
+
+        <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                  <h2 class="card-header ">Your Albums</h2>
+                  <div class="container">
+                  <table class="table table-hover table-striped">
+                   
+                    {% for val,album in albums.items() %}
+                   
+                      <tr>
+                        <td style="width: 200px;">&#11045;{{ album.album_name }}</td>
+                        <td style="width: 150px;"><a href="{{url_for('album_details',id=album['album_id']) }}"><button type="button" class="btn btn-dark" style="justify-content: center;">All Tracks </button></a></td>
+                        <td style="width: 100px;"><a href="{{url_for('edit_album',id=album['album_id'])}}"><button type="button" class="btn btn-warning" >Edit</button></td></a>
+                        <td style="width: 100px;"> <a href="/creator_dashboard?delete_album=true&album_id={{album['album_id']}}"><button type="button"class="btn btn-danger">Delete </button></a> </td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                  </div>
+              </div>
+            </div>
+          </div>
+        {%endif%}
+        <script>
+          function deleteSong(songId) {
+              const confirmed = confirm('Are you sure you want to delete the song?');
+              
+              if (confirmed   ) {
+                  fetch(`http://127.0.0.1:5000/api/delete_song/${songId}`, {
+                      method: 'DELETE',
+                      headers: {
+                          'Content-Type': 'application/json',
+                          // Add any other headers you may need
+                      },
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                      console.log('Delete response:', data);
+                      // Handle the response as needed
+                      alert(data.message);
+                      location.reload(); 
+                  })
+                  .catch(error => {
+                      console.error('Error deleting song:', error);
+                      // Handle errors or display a message to the user
+                  });
+              }
+          }
+      </script>
+
+       
+      
+      
+      {% else %}
+        <h2> Want to start Creator Journey?  <a href="/upload_song">Upload Song </a> </h2>
+      {% endif %}
+      
+     
+</body>
+</html>

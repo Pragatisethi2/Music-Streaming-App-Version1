@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+      <!-- <style>  
+        .right-container {
+          display: flex;
+          justify-content: flex-end;
+        }
+        .card-text {
+          white-space: pre-line;
+          }
+      </style> -->
+  </head> 
+<body>
+  {% with messages= get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Home</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/creator_dashboard">Creator Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/user_dashboard">User Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  {%if songs %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <h2 class="card-header">All Tracks </h2>
+          <div class="container">
+          <table class="table table-hover ">
+            <thead>
+                <tr class="table-dark">
+                  <th scope="col">Song Name</th>
+                  <th scope="col">Song</th>
+                  <th scope="col">Lyrics</th>
+                </tr>
+              </thead>
+            {% for val,song in songs.items() %}
+           
+              <tr class="table-secondary">
+               
+                <td>&#11045; {{song.Song_Title}}</td>
+                <td><audio controls>
+                    <source src="/{{ song.Song_url }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                  </audio></td>
+                <td><a href="{{ url_for('song_details', Id=song.Id) }}" class="btn btn-primary">Read Lyrics</a></td>
+            </tr>
+            {% endfor %}
+            </table>
+            <div class="d-flex align-items-center justify-content-center">
+                <a href='/edit_playlist/{{id}}' class="mx-2">
+                  <button type="button" class="btn btn-warning">Edit Playlist</button>
+                </a>
+                <a href='/user_dashboard?enable_feature=true&playlist_id={{id}}' class="mx-2">
+                  <button type="button" class="btn btn-danger">Delete Playlist</button>
+                </a> 
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  {%else%}
+  <div class="d-flex align-items-center justify-content-center">
+    <a href='/edit_playlist/{{id}}' class="mx-2">
+      <button type="button" class="btn btn-warning">Edit Playlist</button>
+    </a>
+    <a href='/user_dashboard?enable_feature=true&playlist_id={{id}}' class="mx-2">
+      <button type="button" class="btn btn-danger">Delete Playlist</button>
+    </a> 
+  </div>
+
+  <!-- {%endif%} <br><br> -->
+  <div class="d-flex align-items-center justify-content-center">
+    <h3 class="card-header"> 
+      <strong>Want to Create a New Playlist? </strong>
+      <a href='{{url_for("playlist")}}'>
+        <button type="button" class="btn btn-success">Create</button>
+      </a>
+    </h3>
+  </div>
+  

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          
+         }
+    </style>
+</head>
+<body>
+    {% with messages= get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/admin_logout">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    Admin Dashboard
+                  </li>
+                </ul>
+        
+        <div class="justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav ">
+            <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/all_creators"><button class="btn btn-danger">All Creators</button></a>
+             </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/all_songs"><button class="btn btn-dark">Tracks</button></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/all_albums"><button class="btn btn-warning">Albums</button></a>
+              </li>
+              
+            </ul>
+        </div>
+    </div>
+    </nav><br>
+    
+    <div class="card text-center vh-100 border-dark">
+        <div class=" card-header center-container mb-3">
+            <strong>
+                <h3>App Performance</h3>
+            </strong>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3 p-5">
+                   
+                    <div class="card border-black" style="width: 200px; height: 200px; border-width: 2px;">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold center-container">Normal Users</h5><br>
+                            <div class="center-container"><h2 class="card-text"><strong>{{total_users}}</strong></h2></div>
+                        </div>
+                    </div>
+                
+            </div>
+                <div class="col-sm-3">
+                    
+                    <div class="card border-black" style="width: 1400px; height: 150px; border-width: 0px;">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="card border-black" style="width: 150px; height: 150px; border-width: 2px;">
+                                        <div class="card-body">
+                                            <h5 class="card-title font-weight-bold">Total Songs Uploaded</h5>
+                                            <div class="center-container"><h2 class="card-text"><strong>{{total_songs}}</strong></h2></div>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <!-- Add two more cards here -->
+                                <div class="col-sm-4">
+                                    <div class="card border-black" style="width: 150px; height: 150px; border-width: 2px;">
+                                        <div class="card-body">
+                                            <h5 class="card-title font-weight-bold">Total Albums</h5>
+                                            <div class="center-container"><h2 class="card-text"><strong>{{total_albums}}</strong></h2></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                    
+                                <div class="col-sm-4">
+                                <div class="card border-black" style="width: 150px; height: 150px; border-width: 2px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title font-weight-bold">Genre</h5>
+                                        <div class="center-container"><h2 class="card-text"><strong>{{total_genres}}</strong></h2></div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+           
+                <div class="row">
+                    <div class="col-sm-3 p-5">
+                        <div class="card border-black" style="width: 200px; height: 200px; border-width: 2px;">
+                            <div class="card-body">
+                                <h5 class="card-title font-weight-bold center-container">Creators</h5>
+                                <div class="center-container"><h2 class="card-text"><strong>{{total_creator}}</strong></h2></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="card border-black" style="width: 1400px; height: 500px; border-width: 2px;">
+                            <div class="card-header center-container"><h3><strong> Graphs</strong></h3></div>
+                            <div style="display: flex;">
+                                <img src="./static/graph/my_plot1.png" width="600" height="450" style="margin-right: 10px;">
+                                <img src="./static/graph/my_plot2.png" width="600" height="450">
+                            </div> 
+                    </div>
+                </div>        
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    
+   
+    
+
+      
+</body>
+</html>

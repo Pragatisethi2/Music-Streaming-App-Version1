@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Tracks</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+      .right-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+     .center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      
+     }
+    </style>
+ </head>
+<body>
+    {% with messages= get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <h2 class="navbar-brand" >Administrator</h2>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('admin_dashboard')}}">Dashboard</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search" method="POST" action="/search" >
+          <input class="form-control me-2 search_input" type="search" name="q" placeholder="Search for Songs, ALbums" aria-label="Search">
+          <a href="/search"><button class="btn btn-outline-success" type="submit">Search</button></a>
+        </form>
+        </div>
+      </div>
+    </nav>
+
+
+{% if genres %}
+  <div class="card">
+    <h2 class="card-header">All Tracks </h2>
+      {% for genre in genres %}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <h2 class="card-header">{{genre}} </h2>
+              <div class="container">
+              <table class="table table-hover ">
+                <thead>
+                    <tr class="table-dark">
+                      <th scope="col">Song Name</th>
+                      <th scope="col">Song</th>
+                      <th scope="col">Flag/Unflag</th>
+                      <th scope="col">Delete Song</th>
+                    </tr>
+                  </thead>
+                {% for val, song in songs.items() %}
+                    {% if song.Genre == genre %}
+                        <tr class="table-secondary">
+                            <td style="width: 200px;">  {{song.Song_Title}}</td>
+                            <td style="width: 200px;"><audio style="width: 100%;" controls>
+                                <source src="{{ song.Song_url }}" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio></td>
+                            {%if song.Is_Flag  == 1%}
+                            <td style="width: 200px;"><a href="/all_songs?flag_song=False&song_id={{song.Id}}"><button type="button" class="btn btn-danger" onclick="return confirm('Are you sure you want to Unflag the song')">Unflag</button></a></td>
+                            {% endif %}
+                            {% if song.Is_Flag == 0%}
+                            <td style="width: 200px;"><a href="/all_songs?flag_song=True&song_id={{song.Id}}"><button type="button" class="btn btn-danger" onclick="return confirm('Are you sure you want to Flag the song')">Flag</button></a></td>
+                            {%endif%}
+                            <td style="width: 200px;"><a href="/all_songs?delete_song=true&song_id={{song.Id}}"><button type="button" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the song')">Delete</button></a></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </table>
+                </div>
+            </div>
+        </div>
+        </div>
+      {% endfor %}
+    </div>
+{% endif%}
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    
+</head>
+<body>
+    {% with messages= get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="container">
+        <fieldset class ="form-group ">
+        <legend class="border-bottom mb-4"> {{ login }}</legend>
+        <div class="form-group">
+            {{ form.email_id.label(class="form-control-label") }}
+            {{ form.email_id(class="form-control forrm-control-lg",id='email_id' )}}
+            {% if form.email_id.errors %}
+                <ul class="errors text-danger">
+                    {% for error in form.email_id.errors %}
+                    <li> {{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div><br>  
+        <div class="form-group">
+            {{ form.password.label(class="form-control-label") }}
+            {{ form.password(class="form-control forrm-control-lg",id='password' )}}
+            {% if form.password.errors %}
+                <ul class="errors text-danger">
+                    {% for error in form.password.errors %}
+                    <li> {{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div><br> 
+        </fieldset>         
+    <div class="form-group">
+        {{ form.submit(class="btn btn-outline-info") }}
+    </div>
+    </form>
+    {%if login == 'User Login'%}
+    <div class="border-top pt-3"> 
+        <!-- <small class="test-muted">
+           <a class="ml-2" href= '#'>Forget Password</a>
+        </small><br> -->
+        <small class="test-muted">
+            Need an Account ? <a class="ml-2" href= '/register'>Register </a>
+        </small>
+        
+    </div>
+    {%else%}
+    <div class="border-top pt-3"> 
+        <small class="test-muted">
+            Don't have admin account ? Login as user <a class="ml-2" href= '/user_login'>Login </a>
+        </small>
+    </div>
+    {%endif%}
+</div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Music Streaming App</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+      <style>
+          .navbar_text {
+              font-size: 1.5em;
+              font-weight: bold;
+          }
+  
+          .button-container {
+              display: flex;
+              gap: 200px;
+          }
+  
+          /* Adjust button styles if needed */
+          .button {
+              padding: 10px 20px;
+              font-size: 1em;
+          }
+          .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          
+         }
+      </style>
+  </head>
+  <body>
+  
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+              <span class="navbar_text center">Music Streaming App</span>
+  
+              <div class="justify-content-end" id="navbarSupportedContent">
+                  <ul class="navbar-nav">
+                      <li class="nav-item">
+                          <a class="nav-link active" aria-current="page" href="/admin_login">App Admin Login</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </nav>
+      <br><br><br><br>
+      <div class="center-container">
+      <div class="card border-dark mb-3" style="width: 700px; height:500px">
+      <div class="container mt-3">
+          <h1 class="text-center">Welcome to the Music Streaming App</h1><br><br><br><br><br><br>
+  
+          <div class="button-container text-center center-container">
+              <a href="/user_login" class="btn btn-primary" style="width:200px">Login</a>
+              <a href="/register" class="btn btn-success" style="width:200px">Register</a>
+          </div>
+      </div>
+    </div>
+  </div>
+  </body>
+  </html>
+  
